@@ -6,7 +6,7 @@
 import { useState, type CSSProperties } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IconRefreshCw } from '@/components/ui/icons';
-import type { ClaudeQuotaState, ResolvedTheme } from '@/types';
+import type { ClaudeQuotaState, CodexQuotaState, ResolvedTheme } from '@/types';
 import { resolveQuotaErrorMessage } from '@/utils/quota';
 import { getQuotaDisplayName } from '@/utils/quota/identity';
 import {
@@ -23,11 +23,13 @@ import { ClaudeResetGrantDetails } from '../providers/claude/ClaudeResetGrantDet
 import { hasClaudeUsageData } from '../providers/claude/data';
 import bodyStyles from './QuotaBody.module.scss';
 import styles from './QuotaCard.module.scss';
+import { QuotaDetails } from './QuotaDetails';
 
 /** Bind the quota-page styles to the shared rendering contract. */
 const quotaClasses = bindQuotaClasses(bodyStyles, 'QuotaBody.module.scss');
 
 export type QuotaCardProps = {
+  presentation?: 'card' | 'details';
   entry: QuotaFileEntry;
   quota?: QuotaCardState;
   resolvedTheme: ResolvedTheme;
@@ -42,6 +44,7 @@ export type QuotaCardProps = {
 export function QuotaCard(props: QuotaCardProps) {
   const {
     entry,
+    presentation = 'card',
     quota,
     resolvedTheme,
     canRefresh,
@@ -50,11 +53,31 @@ export function QuotaCard(props: QuotaCardProps) {
     onRefresh,
     onReset,
   } = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const details = presentation === 'details';
   const adapter = QUOTA_ADAPTERS[entry.type];
   const file = entry.file;
   const retainedClaudeUsage =
     entry.type === 'claude' && hasClaudeUsageData(quota as ClaudeQuotaState | undefined);
+  const retainedUsage =
+    retainedClaudeUsage ||
+    (details &&
+      entry.type === 'codex' &&
+      Boolean((quota as CodexQuotaState | undefined)?.windows.length));
+  const renderBody = () => {
+    if (details && entry.type === 'claude')
+      return (
+        <QuotaDetails
+          provider="claude"
+          quota={quota as ClaudeQuotaState}
+          claudeResets={claudeReset.count}
+          claudeGrants={claudeReset.grants}
+        />
+      );
+    if (details && entry.type === 'codex')
+      return <QuotaDetails provider="codex" quota={quota as CodexQuotaState} />;
+    return quota ? <adapter.Body quota={quota} classes={quotaClasses} /> : null;
+  };
   const displayName = getQuotaDisplayName(file);
 
   // Capture the entrance delay only at mount, without a render-time ref read.
@@ -94,32 +117,34 @@ export function QuotaCard(props: QuotaCardProps) {
 
   return (
     <article
-      className={`${styles.card} ${mountEntranceDelayMs === null ? '' : styles.cardEnter}`}
+      className={`${styles.card} ${details ? styles.details : ''} ${mountEntranceDelayMs === null ? '' : styles.cardEnter}`}
       style={entranceStyle}
     >
-      <header className={styles.head}>
-        <span
-          className={styles.iconWrap}
-          title={typeLabel}
-          style={
-            isThemeSurfaceIconProvider(providerType)
-              ? { background: getThemeSurfaceIconBackground(resolvedTheme) }
-              : undefined
-          }
-        >
-          {iconSrc ? (
-            <img src={iconSrc} alt="" className={styles.icon} />
-          ) : (
-            <span className={styles.iconFallback}>{typeLabel.slice(0, 1).toUpperCase()}</span>
-          )}
-        </span>
-        <span className={styles.fileName} title={displayName}>
-          {displayName}
-        </span>
-      </header>
+      {!details && (
+        <header className={styles.head}>
+          <span
+            className={styles.iconWrap}
+            title={typeLabel}
+            style={
+              isThemeSurfaceIconProvider(providerType)
+                ? { background: getThemeSurfaceIconBackground(resolvedTheme) }
+                : undefined
+            }
+          >
+            {iconSrc ? (
+              <img src={iconSrc} alt="" className={styles.icon} />
+            ) : (
+              <span className={styles.iconFallback}>{typeLabel.slice(0, 1).toUpperCase()}</span>
+            )}
+          </span>
+          <span className={styles.fileName} title={displayName}>
+            {displayName}
+          </span>
+        </header>
+      )}
 
       <div className={styles.body}>
-        {entry.type === 'claude' && status === 'success' && (
+        {entry.type === 'claude' && status === 'success' && !details && (
           <>
             <div className={quotaClasses.codexPlan}>
               <span className={quotaClasses.codexPlanItem}>
@@ -145,7 +170,7 @@ export function QuotaCard(props: QuotaCardProps) {
             <IconRefreshCw size={15} aria-hidden="true" className={styles.idleGlyph} />
             <span className={styles.idleHint}>{t(`${adapter.i18nPrefix}.idle`)}</span>
           </button>
-        ) : loading && !retainedClaudeUsage ? (
+        ) : loading && !retainedUsage ? (
           <div className={styles.skeleton} aria-busy="true">
             <span className={styles.srOnly}>{t(`${adapter.i18nPrefix}.loading`)}</span>
             {[0, 1].map((row) => (
@@ -159,21 +184,36 @@ export function QuotaCard(props: QuotaCardProps) {
           <div className={styles.errorStrip} role="alert">
             {t(`${adapter.i18nPrefix}.load_failed`, { message: errorMessage })}
           </div>
-        ) : quota && !retainedClaudeUsage ? (
-          <adapter.Body quota={quota} classes={quotaClasses} />
-        ) : !retainedClaudeUsage ? (
+        ) : quota && !retainedUsage ? (
+          renderBody()
+        ) : !retainedUsage ? (
           <div className={styles.idleHint}>{t(`${adapter.i18nPrefix}.idle`)}</div>
         ) : null}
-        {loading && retainedClaudeUsage && (
+        {loading && retainedUsage && (
           <div role="status" aria-busy="true" className={quotaClasses.quotaMessage}>
             {t(`${adapter.i18nPrefix}.loading`)}
           </div>
         )}
-        {retainedClaudeUsage && quota && <adapter.Body quota={quota} classes={quotaClasses} />}
+        {retainedUsage && quota && renderBody()}
       </div>
 
       {status !== 'idle' && (
         <footer className={styles.actionRow}>
+          {details && (quota as ClaudeQuotaState | undefined)?.observedAt && (
+            <span className={styles.observed}>
+              {t('quota_management.overview.checked_at', {
+                time: new Date((quota as ClaudeQuotaState).observedAt ?? '').toLocaleTimeString(
+                  i18n.resolvedLanguage,
+                  { hour: '2-digit', minute: '2-digit' }
+                ),
+              })}
+            </span>
+          )}
+          {details && claudeReset.message && (
+            <span role="status" className={styles.resetMessage}>
+              {t(`claude_reset.${claudeReset.message}`)}
+            </span>
+          )}
           {entry.type === 'claude' && (
             <button
               type="button"

@@ -1,0 +1,104 @@
+.details {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  h3 {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 16px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th,
+  td {
+    padding: 8px 16px 8px 0;
+    text-align: left;
+    vertical-align: top;
+  }
+  th:last-child,
+  td:last-child {
+    padding-right: 0;
+  }
+  thead th {
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 400;
+    padding-top: 0;
+  }
+  tbody th {
+    font-weight: 400;
+    width: 45%;
+  }
+  dl {
+    margin: 0;
+  }
+}
+.plan {
+  min-width: 0;
+}
+.fact {
+  display: grid;
+  grid-template-columns: minmax(100px, 1fr) minmax(0, 1.3fr);
+  column-gap: 16px;
+  padding: 7px 0;
+  dt {
+    color: var(--text-secondary);
+  }
+  dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+}
+.value,
+.low {
+  font-weight: 500;
+  white-space: nowrap;
+}
+.low {
+  color: var(--amber-color);
+}
+.reset {
+  display: flex;
+  flex-direction: column;
+}
+.secondary {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 400;
+}
+.balance {
+  margin-top: 24px;
+}
+.balanceValue {
+  font-size: 24px;
+  font-weight: 500;
+}
+@media (max-width: 900px) {
+  .details {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  .plan {
+    max-width: none;
+  }
+}
+@media (max-width: 480px) {
+  .details {
+    font-size: 14px;
+    th,
+    td {
+      padding-right: 12px;
+    }
+  }
+  .fact {
+    grid-template-columns: minmax(90px, 1fr) minmax(0, 1.3fr);
+  }
+}

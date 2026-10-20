@@ -1638,6 +1638,14 @@
       "checked_at": "查询于 {{time}}",
       "subtitle": "剩余额度",
       "title": "额度"
+    },
+    "details": {
+      "additional_limits": "其他额度",
+      "limit": "额度",
+      "left": "剩余",
+      "resets": "重置",
+      "plan_and_balance": "套餐与余额",
+      "spent": "已用金额"
     }
   },
   "plugin_management": {
@@ -2285,5 +2293,37 @@
     "unavailable": "重置暂不可用。",
     "rate_limited": "请求过于频繁。",
     "auth_error": "授权被拒绝。"
+  },
+  "workspace": {
+    "navigation": "工作区",
+    "overview": "概览",
+    "accounts": "账户",
+    "quota": "额度",
+    "activity": "活动",
+    "settings": "设置",
+    "providers": "提供商",
+    "routing": "路由",
+    "configuration": "配置",
+    "logs": "日志",
+    "extensions": "扩展",
+    "system": "系统",
+    "back": "返回工作区",
+    "connect_account": "连接账户",
+    "view_details": "查看详情",
+    "account_details": "查看 {{name}} 的详情",
+    "overview_description": "代理、账户与近期活动。",
+    "proxy_status": "代理状态",
+    "version_unknown": "未报告版本",
+    "system_details": "系统详情",
+    "account_health": "已启用且可用的凭证。请在额度页面查看剩余额度。",
+    "manage_accounts": "管理账户",
+    "capacity": "剩余额度",
+    "view_quota": "查看额度",
+    "capacity_description": "查看各账户的 5 小时和每周剩余额度及下次重置时间。",
+    "view_activity": "查看活动",
+    "activity_scope": "CPA 报告的近期流量。汇总计数不能识别模型替换。",
+    "reported_allowance": "已报告的可用额度",
+    "next_reset": "下次报告的重置：{{time}}",
+    "quota_snapshot_scope": "基于缓存的额度检查。账户健康状态单独显示。"
   }
 }

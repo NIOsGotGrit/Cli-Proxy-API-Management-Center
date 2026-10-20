@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 import { IconRefreshCw, IconUpload } from '@/components/ui/icons';
@@ -45,7 +46,7 @@ export function VaultHeader(props: VaultHeaderProps) {
     <header className={styles.header} ref={revealRef}>
       <div className={styles.copy}>
         <h1 className={styles.title} data-reveal>
-          {t('auth_files.title')}
+          {t('workspace.accounts')}
         </h1>
         <p className={styles.meta} data-reveal>
           <span className={styles.metaTotal}>
@@ -70,6 +71,9 @@ export function VaultHeader(props: VaultHeaderProps) {
         </p>
       </div>
       <div className={styles.actions} data-reveal>
+        <Link to="/oauth" className={styles.ghostAction}>
+          {t('workspace.connect_account')}
+        </Link>
         {onRefreshCredentials && (
           <button
             type="button"

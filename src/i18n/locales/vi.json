@@ -1596,6 +1596,14 @@
       "checked_at": "Đã kiểm tra {{time}}",
       "subtitle": "Hạn mức còn lại",
       "title": "Hạn mức"
+    },
+    "details": {
+      "additional_limits": "Hạn mức bổ sung",
+      "limit": "Hạn mức",
+      "left": "Còn lại",
+      "resets": "Đặt lại",
+      "plan_and_balance": "Gói và số dư",
+      "spent": "Đã chi"
     }
   },
   "plugin_management": {
@@ -2293,5 +2301,37 @@
     "unavailable": "Tính năng đặt lại hiện không khả dụng.",
     "rate_limited": "Yêu cầu bị giới hạn tốc độ.",
     "auth_error": "Ủy quyền đã bị từ chối."
+  },
+  "workspace": {
+    "navigation": "Không gian làm việc",
+    "overview": "Tổng quan",
+    "accounts": "Tài khoản",
+    "quota": "Hạn mức",
+    "activity": "Hoạt động",
+    "settings": "Cài đặt",
+    "providers": "Nhà cung cấp",
+    "routing": "Định tuyến",
+    "configuration": "Cấu hình",
+    "logs": "Nhật ký",
+    "extensions": "Tiện ích",
+    "system": "Hệ thống",
+    "back": "Về không gian làm việc",
+    "connect_account": "Kết nối tài khoản",
+    "view_details": "Xem chi tiết",
+    "account_details": "Xem chi tiết {{name}}",
+    "overview_description": "Proxy, tài khoản và hoạt động gần đây.",
+    "proxy_status": "Trạng thái proxy",
+    "version_unknown": "Chưa có thông tin phiên bản",
+    "system_details": "Chi tiết hệ thống",
+    "account_health": "Thông tin xác thực đã bật và khả dụng. Xem Hạn mức để biết dung lượng còn lại.",
+    "manage_accounts": "Quản lý tài khoản",
+    "capacity": "Dung lượng còn lại",
+    "view_quota": "Xem hạn mức",
+    "capacity_description": "Xem hạn mức 5 giờ, hàng tuần và lần đặt lại tiếp theo của từng tài khoản.",
+    "view_activity": "Xem hoạt động",
+    "activity_scope": "Lưu lượng gần đây do CPA báo cáo. Số liệu tổng hợp không xác định việc thay thế mô hình.",
+    "reported_allowance": "Hạn mức khả dụng đã báo cáo",
+    "next_reset": "Lần đặt lại tiếp theo: {{time}}",
+    "quota_snapshot_scope": "Dựa trên kết quả kiểm tra hạn mức đã lưu. Tình trạng tài khoản được hiển thị riêng."
   }
 }

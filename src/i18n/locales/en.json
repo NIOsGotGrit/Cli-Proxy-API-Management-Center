@@ -1640,6 +1640,14 @@
       "checked_at": "Checked {{time}}",
       "subtitle": "Allowance remaining",
       "title": "Quota"
+    },
+    "details": {
+      "additional_limits": "Additional limits",
+      "limit": "Limit",
+      "left": "Left",
+      "resets": "Resets",
+      "plan_and_balance": "Plan & balance",
+      "spent": "Spent"
     }
   },
   "plugin_management": {
@@ -2287,5 +2295,37 @@
     "unavailable": "Resets are currently unavailable.",
     "rate_limited": "Request rate limited.",
     "auth_error": "Authorization was refused."
+  },
+  "workspace": {
+    "navigation": "Workspace",
+    "overview": "Overview",
+    "accounts": "Accounts",
+    "quota": "Quota",
+    "activity": "Activity",
+    "settings": "Settings",
+    "providers": "Providers",
+    "routing": "Routing",
+    "configuration": "Configuration",
+    "logs": "Logs",
+    "extensions": "Extensions",
+    "system": "System",
+    "back": "Back to workspace",
+    "connect_account": "Connect account",
+    "view_details": "View details",
+    "account_details": "View details for {{name}}",
+    "overview_description": "Your proxy, accounts, and recent activity.",
+    "proxy_status": "Proxy status",
+    "version_unknown": "Version not reported",
+    "system_details": "System details",
+    "account_health": "Enabled, available credentials. Check Quota for remaining allowance.",
+    "manage_accounts": "Manage accounts",
+    "capacity": "Remaining capacity",
+    "view_quota": "View quota",
+    "capacity_description": "Review the 5-hour and weekly allowance for each account, with its next reset.",
+    "view_activity": "View activity",
+    "activity_scope": "Recent traffic reported by CPA. Aggregate counts do not identify model replacements.",
+    "reported_allowance": "Reported allowance",
+    "next_reset": "Next reported reset: {{time}}",
+    "quota_snapshot_scope": "Based on cached quota checks. Account health is shown separately."
   }
 }

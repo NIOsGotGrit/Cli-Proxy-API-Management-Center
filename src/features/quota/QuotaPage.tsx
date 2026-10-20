@@ -448,13 +448,6 @@ export function QuotaPage() {
           />
         ) : (
           <div className={styles.grid}>
-            {pageItems.some((entry) => entry.type === 'claude' || entry.type === 'codex') && (
-              <div className={styles.columns}>
-                <span>{t('quota_management.overview.account')}</span>
-                <span>{t('quota_management.overview.weekly_left')}</span>
-                <span>{t('quota_management.overview.five_hour_left')}</span>
-              </div>
-            )}
             {pageItems.map((entry, index) => {
               const Account =
                 entry.type === 'claude' || entry.type === 'codex' ? QuotaRow : QuotaCard;

@@ -54,9 +54,11 @@ export function ConfigPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const requestedFieldEntry = useMemo(() => {
-    const fieldId = new URLSearchParams(location.search).get('field');
+    const fieldId =
+      new URLSearchParams(location.search).get('field') ??
+      (location.pathname === '/routing' ? 'routingStrategy' : null);
     return findConfigFieldById(fieldId);
-  }, [location.search]);
+  }, [location.pathname, location.search]);
   const pageTransitionLayer = usePageTransitionLayer();
   const isCurrentLayer = pageTransitionLayer ? pageTransitionLayer.isCurrentLayer : true;
   const showNotification = useNotificationStore((state) => state.showNotification);
@@ -299,6 +301,7 @@ export function ConfigPage() {
   return (
     <div className={styles.page} ref={revealRef}>
       <ConfigHeader
+        title={location.pathname === '/routing' ? t('workspace.routing') : undefined}
         meta={headerMeta}
         reloadDisabled={doc.loading || doc.saving}
         reloading={doc.loading}

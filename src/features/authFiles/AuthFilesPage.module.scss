@@ -40,8 +40,8 @@
 
 .grid {
   display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  gap: 24px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: stretch;
 }
 
@@ -98,5 +98,11 @@
 @include mobile {
   .page {
     gap: 16px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .grid:not(.gridCompact) {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

@@ -232,7 +232,7 @@ export function DashboardPage() {
       <section className={styles.hero} ref={heroRef}>
         <div className={styles.heroCopy}>
           <h1 className={styles.heroTitle} data-reveal>
-            {t(`dashboard.${verdict.key}`)}
+            {t('workspace.activity')}
             <span
               className={`${styles.heroPeriod} ${heroAlive ? styles.heroPeriodLive : ''}`}
               style={{ color: verdict.accent }}

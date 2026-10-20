@@ -5,6 +5,7 @@ import type { HeaderMetaSegment } from '../uiState';
 import styles from './ConfigHeader.module.scss';
 
 export type ConfigHeaderProps = {
+  title?: string;
   /** ▍mono meta 行的段落序列（uiState.buildHeaderMeta 的产物）。 */
   meta: HeaderMetaSegment[];
   reloadDisabled: boolean;
@@ -19,6 +20,7 @@ export type ConfigHeaderProps = {
  * 保存动作不在头部常驻 —— 由 FloatingSaveBar 在 dirty 时承载。
  */
 export function ConfigHeader({
+  title,
   meta,
   reloadDisabled,
   reloading,
@@ -37,7 +39,7 @@ export function ConfigHeader({
     <header className={styles.header}>
       <div className={styles.copy}>
         <h1 className={styles.title} data-reveal>
-          {t('config_management.title')}
+          {title ?? t('config_management.title')}
         </h1>
         <p className={styles.meta} data-reveal>
           {meta.map((segment, index) => (

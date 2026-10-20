@@ -983,3 +983,61 @@
     box-shadow: 0 0 0 0 transparent;
   }
 }
+
+/* Traffic keeps the existing CPA observations within the workspace page frame. */
+.page {
+  max-width: none;
+  gap: 32px;
+}
+.ambient,
+.heroWire {
+  display: none;
+}
+.hero {
+  padding-top: 0;
+  padding-bottom: 0;
+  align-items: start;
+  gap: 24px;
+}
+.heroCopy {
+  gap: 12px;
+}
+.heroPeriod {
+  display: none;
+}
+.heroMeta {
+  font-family: inherit;
+}
+.heroPanel {
+  box-shadow: none;
+  border: 0;
+  background: var(--bg-primary);
+}
+
+.heroFigure,
+.statValue {
+  font-size: 32px;
+  font-family: inherit;
+  font-weight: 500;
+}
+.heroPanelLabel,
+.heroPanelMeta,
+.eyebrow {
+  font-size: 13px;
+  font-family: inherit;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.sectionTitle,
+.panelTitle {
+  font-size: 18px;
+  font-weight: 500;
+}
+.statTile,
+.panel,
+.ctaCard {
+  background: var(--bg-primary);
+  border: 0;
+  border-radius: var(--surface-radius);
+  box-shadow: none;
+}

@@ -51,7 +51,9 @@ import { triggerHeaderRefresh } from '@/hooks/useHeaderRefresh';
 import { LANGUAGE_LABEL_KEYS, LANGUAGE_ORDER } from '@/utils/constants';
 import { isSupportedLanguage } from '@/utils/language';
 import { getSidebarShortcutLabel, isSidebarToggleShortcut } from '@/utils/sidebarShortcut';
+import { resolvePageScrollContainer } from '@/utils/pageScroll';
 import type { Theme } from '@/types';
+import { isSettingsPath, navigationLinkActive, workspaceReturnPath } from './navigation';
 
 const sidebarIcons: Record<string, ReactNode> = {
   dashboard: <IconSidebarDashboard size={18} />,
@@ -351,15 +353,47 @@ export function MainLayout() {
 
   const fullBrandName = 'CLI Proxy API Management Center';
   const abbrBrandName = t('title.abbr');
+  const settingsOpen = isSettingsPath(location.pathname);
+  const lastWorkspaceRef = useRef({ path: '/', scrollTop: 0 });
+  const [workspaceReturn, setWorkspaceReturn] = useState({ path: '/', scrollTop: 0 });
+  const wasSettingsRef = useRef(settingsOpen);
   const isLogsPage = location.pathname.startsWith('/logs');
   const isPluginResourcePage = location.pathname.startsWith('/plugin-pages');
   const showSidebarLabels = !sidebarCollapsed || sidebarOpen;
+
+  // Record workspace position only when entering Settings; navigating among settings preserves it.
+  useLayoutEffect(() => {
+    if (settingsOpen && !wasSettingsRef.current)
+      setWorkspaceReturn({ ...lastWorkspaceRef.current });
+    if (!settingsOpen) {
+      lastWorkspaceRef.current.path = workspaceReturnPath(
+        location.pathname,
+        location.search,
+        location.hash
+      );
+    }
+    wasSettingsRef.current = settingsOpen;
+  }, [settingsOpen, location.pathname, location.search, location.hash]);
+
+  const enterSettings = () => {
+    lastWorkspaceRef.current.scrollTop =
+      resolvePageScrollContainer(contentRef.current)?.scrollTop ?? 0;
+  };
+  useEffect(() => {
+    if (settingsOpen) return;
+    const rememberDocumentScroll = () => {
+      lastWorkspaceRef.current.scrollTop =
+        resolvePageScrollContainer(contentRef.current)?.scrollTop ?? 0;
+    };
+    window.addEventListener('scroll', rememberDocumentScroll, { passive: true });
+    return () => window.removeEventListener('scroll', rememberDocumentScroll);
+  }, [settingsOpen]);
 
   // Keep floating header height available to sticky mobile elements and overlays.
   useLayoutEffect(() => {
     const updateHeaderHeight = () => {
       const height = headerRef.current?.offsetHeight;
-      if (height) {
+      if (height !== undefined) {
         document.documentElement.style.setProperty('--header-height', `${height}px`);
       }
     };
@@ -592,113 +626,58 @@ export function MainLayout() {
     icon: sidebarIcons.quickStart,
   };
 
-  const navGroups: SidebarNavGroup[] = [
+  const workspaceGroups: SidebarNavGroup[] = [
     {
-      id: 'operate',
-      labelKey: 'nav_groups.operate',
+      id: 'workspace',
+      labelKey: 'workspace.navigation',
       items: [
-        {
-          path: '/',
-          labelKey: 'nav.dashboard',
-          metaKey: 'nav_meta.dashboard',
-          icon: sidebarIcons.dashboard,
-        },
-        ...(!isApiKeyFunConfigured ? [quickStartNavItem] : []),
-      ],
-    },
-    {
-      id: 'gateway',
-      labelKey: 'nav_groups.gateway',
-      items: [
-        {
-          path: '/ai-providers',
-          labelKey: 'nav.ai_providers',
-          metaKey: 'nav_meta.ai_providers',
-          icon: sidebarIcons.aiProviders,
-        },
+        { path: '/', labelKey: 'workspace.overview', icon: sidebarIcons.dashboard },
         {
           path: '/auth-files',
-          labelKey: 'nav.auth_files',
-          metaKey: 'nav_meta.auth_files',
+          labelKey: 'workspace.accounts',
+          icon: sidebarIcons.authFiles,
           badge: authFilesCount ?? undefined,
           badgeLabel:
             typeof authFilesCount === 'number'
               ? t('sidebar.auth_files_count', { count: authFilesCount })
               : undefined,
-          icon: sidebarIcons.authFiles,
         },
-        {
-          path: '/oauth',
-          labelKey: 'nav.oauth',
-          metaKey: 'nav_meta.oauth',
-          icon: sidebarIcons.oauth,
-        },
-        ...(isApiKeyFunConfigured ? [quickStartNavItem] : []),
+        { path: '/quota', labelKey: 'workspace.quota', icon: sidebarIcons.quota },
+        { path: '/activity', labelKey: 'workspace.activity', icon: sidebarIcons.dashboard },
       ],
     },
+  ];
+  const settingsGroups: SidebarNavGroup[] = [
     {
-      id: 'observe',
-      labelKey: 'nav_groups.observe',
+      id: 'settings',
+      labelKey: 'workspace.settings',
       items: [
-        {
-          path: '/quota',
-          labelKey: 'nav.quota_management',
-          metaKey: 'nav_meta.quota_management',
-          icon: sidebarIcons.quota,
-        },
-        {
-          path: '/logs',
-          labelKey: 'nav.logs',
-          metaKey: 'nav_meta.logs',
-          icon: sidebarIcons.logs,
-        },
-      ],
-    },
-    {
-      id: 'control',
-      labelKey: 'nav_groups.control',
-      items: [
-        {
-          path: '/config',
-          labelKey: 'nav.config_management',
-          metaKey: 'nav_meta.config_management',
-          icon: sidebarIcons.config,
-        },
+        { path: '/ai-providers', labelKey: 'workspace.providers', icon: sidebarIcons.aiProviders },
+        { path: '/routing', labelKey: 'workspace.routing', icon: sidebarIcons.config },
+        { path: '/config', labelKey: 'workspace.configuration', icon: sidebarIcons.config },
+        { path: '/logs', labelKey: 'workspace.logs', icon: sidebarIcons.logs },
         ...(supportsPlugin
           ? [
-              {
-                path: '/plugins',
-                labelKey: 'nav.plugins',
-                metaKey: 'nav_meta.plugins',
-                icon: sidebarIcons.plugins,
-              },
+              { path: '/plugins', labelKey: 'workspace.extensions', icon: sidebarIcons.plugins },
               {
                 path: '/plugin-store',
                 labelKey: 'nav.plugin_store',
-                metaKey: 'nav_meta.plugin_store',
                 icon: sidebarIcons.pluginStore,
               },
             ]
           : []),
-        {
-          path: '/system',
-          labelKey: 'nav.system_info',
-          metaKey: 'nav_meta.system_info',
-          icon: sidebarIcons.system,
-        },
+        { path: '/system', labelKey: 'workspace.system', icon: sidebarIcons.system },
+        quickStartNavItem,
       ],
     },
-    ...(pluginPageNavItems.length > 0
-      ? [
-          {
-            id: 'plugin-pages',
-            labelKey: 'nav_groups.plugin_pages',
-            items: pluginPageNavItems,
-          },
-        ]
+    ...(pluginPageNavItems.length
+      ? [{ id: 'plugin-pages', labelKey: 'nav_groups.plugin_pages', items: pluginPageNavItems }]
       : []),
   ];
-  const navItems = navGroups.flatMap((group) => flattenNavItems(group.items));
+  const navGroups = settingsOpen ? settingsGroups : workspaceGroups;
+  const navItems = [...workspaceGroups, ...settingsGroups].flatMap((group) =>
+    flattenNavItems(group.items)
+  );
   const navOrder = navItems.map((item) => item.path);
   const getRouteOrder = (pathname: string) => {
     const trimmedPath =
@@ -859,8 +838,11 @@ export function MainLayout() {
       <NavLink
         key={item.path}
         to={item.path}
-        className={({ isActive }) => `${className} ${isActive ? 'active' : ''}`}
+        className={() =>
+          `${className} ${navigationLinkActive(item.path, location.pathname, location.search) ? 'active' : ''}`
+        }
         onClick={() => {
+          if (!settingsOpen && isSettingsPath(item.path.split('?')[0])) enterSettings();
           focusedRailItemRef.current = null;
           setSidebarOpen(false);
           hideRailTooltip();
@@ -1151,28 +1133,72 @@ export function MainLayout() {
           className={`sidebar ${sidebarOpen ? 'open' : ''} ${sidebarCollapsed ? 'collapsed' : ''}`}
         >
           <div className="sidebar-header">
-            <div className="sidebar-brand" title={fullBrandName}>
-              <img src={INLINE_LOGO_JPEG} alt="CPAMC logo" className="sidebar-brand-logo" />
-              {showSidebarLabels && (
-                <span className="sidebar-brand-text">
-                  <span className="sidebar-brand-title">{abbrBrandName}</span>
-                  <span className="sidebar-brand-subtitle">{t('sidebar.subtitle')}</span>
-                </span>
-              )}
-            </div>
+            {settingsOpen ? (
+              <NavLink
+                to={workspaceReturn.path}
+                state={{ workspaceScrollTop: workspaceReturn.scrollTop }}
+                className="workspace-back"
+                onClick={() => setSidebarOpen(false)}
+                aria-label={t('workspace.back')}
+              >
+                {headerIcons.chevronLeft}
+                {showSidebarLabels && <span>{t('workspace.back')}</span>}
+              </NavLink>
+            ) : (
+              <div className="sidebar-brand" title={fullBrandName}>
+                <img src={INLINE_LOGO_JPEG} alt="CPAMC logo" className="sidebar-brand-logo" />
+                {showSidebarLabels && (
+                  <span className="sidebar-brand-text">
+                    <span className="sidebar-brand-title">{abbrBrandName}</span>
+                    <span className="sidebar-brand-subtitle">{t('sidebar.subtitle')}</span>
+                  </span>
+                )}
+              </div>
+            )}
           </div>
 
-          <div className="nav-section">
+          <nav
+            className="nav-section"
+            aria-label={t(settingsOpen ? 'workspace.settings' : 'workspace.navigation')}
+          >
             {navGroups.map((group, idx) => (
               <div className="nav-group" key={group.id}>
-                {showSidebarLabels ? (
-                  <div className="nav-group-label">{t(group.labelKey)}</div>
-                ) : (
-                  idx > 0 && <div className="nav-group-divider" aria-hidden="true" />
-                )}
+                {showSidebarLabels
+                  ? (settingsOpen || group.id !== 'workspace') && (
+                      <div className="nav-group-label">{t(group.labelKey)}</div>
+                    )
+                  : idx > 0 && <div className="nav-group-divider" aria-hidden="true" />}
                 {group.items.map((item) => renderNavItem(item))}
               </div>
             ))}
+          </nav>
+          <div className="workspace-footer">
+            {!settingsOpen && (
+              <NavLink
+                to="/config"
+                className="nav-item"
+                onClick={() => {
+                  enterSettings();
+                  setSidebarOpen(false);
+                }}
+                aria-label={t('workspace.settings')}
+              >
+                <span className="nav-icon">{sidebarIcons.config}</span>
+                {showSidebarLabels && <span>{t('workspace.settings')}</span>}
+              </NavLink>
+            )}
+            {showSidebarLabels && (
+              <div className="workspace-connection">
+                <span className={`connection-indicator ${connectionStatus}`} aria-hidden="true" />
+                {t(
+                  connectionStatus === 'connected'
+                    ? 'common.connected'
+                    : connectionStatus === 'connecting'
+                      ? 'common.connecting'
+                      : 'common.disconnected'
+                )}
+              </div>
+            )}
           </div>
         </aside>
 
@@ -1196,6 +1222,9 @@ export function MainLayout() {
             isPluginResourcePage ? ' content-plugin-resource' : ''
           }`}
           ref={contentRef}
+          onScroll={(event) => {
+            if (!settingsOpen) lastWorkspaceRef.current.scrollTop = event.currentTarget.scrollTop;
+          }}
         >
           <main
             className={`main-content${isLogsPage ? ' main-content-logs' : ''}${

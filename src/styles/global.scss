@@ -8,6 +8,7 @@
 @use './themes.scss';
 @use './components.scss';
 @use './layout.scss';
+@use './workspace.scss';
 
 body {
   background-color: var(--bg-secondary);
@@ -44,4 +45,3 @@ body.modal-open .content {
     background: var(--border-hover);
   }
 }
-

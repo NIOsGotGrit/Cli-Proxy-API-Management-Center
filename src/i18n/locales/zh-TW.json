@@ -1666,6 +1666,14 @@
       "checked_at": "查詢於 {{time}}",
       "subtitle": "剩餘額度",
       "title": "額度"
+    },
+    "details": {
+      "additional_limits": "其他額度",
+      "limit": "額度",
+      "left": "剩餘",
+      "resets": "重設",
+      "plan_and_balance": "方案與餘額",
+      "spent": "已用金額"
     }
   },
   "plugin_management": {
@@ -2313,5 +2321,37 @@
     "unavailable": "重置暫不可用。",
     "rate_limited": "請求過於頻繁。",
     "auth_error": "授權遭拒。"
+  },
+  "workspace": {
+    "navigation": "工作區",
+    "overview": "概覽",
+    "accounts": "帳戶",
+    "quota": "額度",
+    "activity": "活動",
+    "settings": "設定",
+    "providers": "供應商",
+    "routing": "路由",
+    "configuration": "組態",
+    "logs": "日誌",
+    "extensions": "擴充功能",
+    "system": "系統",
+    "back": "返回工作區",
+    "connect_account": "連接帳戶",
+    "view_details": "查看詳情",
+    "account_details": "查看 {{name}} 的詳情",
+    "overview_description": "代理、帳戶與近期活動。",
+    "proxy_status": "代理狀態",
+    "version_unknown": "未回報版本",
+    "system_details": "系統詳情",
+    "account_health": "已啟用且可用的憑證。請在額度頁面查看剩餘額度。",
+    "manage_accounts": "管理帳戶",
+    "capacity": "剩餘額度",
+    "view_quota": "查看額度",
+    "capacity_description": "查看各帳戶的 5 小時和每週剩餘額度及下次重設時間。",
+    "view_activity": "查看活動",
+    "activity_scope": "CPA 回報的近期流量。彙總計數不能識別模型替換。",
+    "reported_allowance": "已回報的可用額度",
+    "next_reset": "下次回報的重設：{{time}}",
+    "quota_snapshot_scope": "基於快取的額度檢查。帳戶健康狀態另外顯示。"
   }
 }

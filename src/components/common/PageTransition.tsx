@@ -8,6 +8,7 @@ import {
   type LayerStatus,
 } from './PageTransitionLayer';
 import './PageTransition.scss';
+import { resolvePageScrollContainer } from '@/utils/pageScroll';
 
 interface PageTransitionProps {
   render: (location: Location) => ReactNode;
@@ -95,9 +96,7 @@ export function PageTransition({
   const currentLayerPathname = currentLayer?.location.pathname;
 
   const resolveScrollContainer = useCallback(() => {
-    if (scrollContainerRef?.current) return scrollContainerRef.current;
-    if (typeof document === 'undefined') return null;
-    return document.scrollingElement as HTMLElement | null;
+    return resolvePageScrollContainer(scrollContainerRef?.current ?? null);
   }, [scrollContainerRef]);
 
   useLayoutEffect(() => {
@@ -109,7 +108,12 @@ export function PageTransition({
     exitScrollOffsetRef.current = exitScrollOffset;
     scrollPositionsRef.current.set(currentLayerKey, exitScrollOffset);
 
-    enterScrollOffsetRef.current = scrollPositionsRef.current.get(location.key) ?? 0;
+    const workspaceScroll = (location.state as { workspaceScrollTop?: unknown } | null)
+      ?.workspaceScrollTop;
+    enterScrollOffsetRef.current =
+      typeof workspaceScroll === 'number' && Number.isFinite(workspaceScroll)
+        ? Math.max(0, workspaceScroll)
+        : (scrollPositionsRef.current.get(location.key) ?? 0);
     const resolveOrderIndex = (pathname?: string) => {
       if (!getRouteOrder || !pathname) return null;
       const index = getRouteOrder(pathname);
