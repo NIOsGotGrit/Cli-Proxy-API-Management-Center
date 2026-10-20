@@ -34,3 +34,9 @@ settings.local.json
 *.njsproj
 *.sln
 *.sw?
+
+# Routing monitor runtime observations and deployment secret
+ops/routing-monitor/data/
+ops/routing-monitor/management-key
+
+ops/routing-monitor/__pycache__/

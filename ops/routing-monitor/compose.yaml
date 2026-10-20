@@ -1,0 +1,18 @@
+services:
+  routing-monitor:
+    build: .
+    container_name: fleet-routing-monitor
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    volumes:
+      - ./data:/data
+      - ./management-key:/run/secrets/management-key:ro
+    networks:
+      cpa:
+        aliases: [fleet-routing-monitor]
+networks:
+  cpa:
+    external: true
+    name: cli-proxy-api_default

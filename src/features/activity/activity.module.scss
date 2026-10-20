@@ -1,0 +1,242 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.surface {
+  min-width: 0;
+  background: var(--bg-primary);
+  border-radius: var(--surface-radius);
+  padding: 28px;
+  h2,
+  h3 {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  p {
+    line-height: 1.6;
+  }
+}
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.muted,
+.secondary,
+.caption {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+.secondary {
+  display: block;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.warning {
+  color: var(--amber-text);
+  display: block;
+  font-size: 13px;
+}
+.route {
+  font-size: 24px;
+  font-weight: 500;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.models {
+  margin-top: 8px;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+  color: var(--text-secondary);
+}
+.metric {
+  font-size: 32px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.empty {
+  padding: 12px 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+.link {
+  font-size: 13px;
+  color: var(--text-secondary);
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+.surface > .link {
+  display: inline-block;
+  margin-top: 24px;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.tableWrap {
+  min-width: 0;
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  text-align: left;
+  margin-top: 16px;
+  th {
+    color: var(--text-secondary);
+    font-weight: 400;
+    font-size: 13px;
+  }
+  th,
+  td {
+    padding: 14px 20px 14px 0;
+    vertical-align: top;
+  }
+  th:last-child,
+  td:last-child {
+    padding-right: 0;
+  }
+  td {
+    border-bottom: 1px solid color-mix(in srgb, var(--border-color) 50%, transparent);
+  }
+}
+.time {
+  white-space: nowrap;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.detailAction {
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 13px;
+  padding: 4px 0;
+  cursor: pointer;
+  white-space: nowrap;
+  &:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 4px;
+  }
+}
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.caption {
+  margin-top: 20px;
+}
+.facts {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  > div {
+    display: grid;
+    grid-template-columns: minmax(100px, 1fr) minmax(0, 2fr);
+    gap: 20px;
+  }
+  dt {
+    color: var(--text-secondary);
+  }
+  dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+}
+.details {
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  h3 {
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+.identifier {
+  font-family: monospace;
+  font-size: 13px;
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+@media (max-width: 1050px) {
+  .summaryGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .surface {
+    padding: 24px;
+  }
+  .actions {
+    gap: 12px;
+  }
+  .facts > div {
+    grid-template-columns: minmax(90px, 1fr) minmax(0, 1.8fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .requestsTable {
+    display: block;
+    thead {
+      display: none;
+    }
+    tbody {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    tr {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px 20px;
+      padding-bottom: 24px;
+    }
+    td {
+      display: block;
+      padding: 0;
+      border: 0;
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    td:first-child,
+    td:last-child {
+      grid-column: 1 / -1;
+    }
+    td[data-label]::before {
+      content: attr(data-label);
+      display: block;
+      color: var(--text-secondary);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    .detailAction {
+      min-height: 36px;
+    }
+  }
+}

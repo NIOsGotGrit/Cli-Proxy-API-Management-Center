@@ -6,12 +6,12 @@ This fork preserves the existing CPA management app and its v8 data contracts. I
 
 A 220px sidebar sits beside one page header and a centered content area of at most 1,200px. Desktop page padding is 32px. Mobile navigation opens as a drawer; content uses 20px padding. Existing hash URLs remain available.
 
-| Workspace | Purpose                                                                      |
-| --------- | ---------------------------------------------------------------------------- |
-| Overview  | Connection health, account health, cached quota observations, recent traffic |
-| Accounts  | Existing credentials, maintenance, uploads, and OAuth connection             |
-| Quota     | Each account's 5-hour and weekly allowance, with reset times                 |
-| Activity  | Existing CPA traffic analysis and runtime details                            |
+| Workspace | Purpose                                                                                |
+| --------- | -------------------------------------------------------------------------------------- |
+| Overview  | Connection health, account health, plan, 5-hour and weekly capacity, routing and cache |
+| Accounts  | Existing credentials, maintenance, uploads, and OAuth connection                       |
+| Quota     | Each account's 5-hour and weekly allowance, with reset times                           |
+| Activity  | Requested versus served models, account changes, cache observations, traffic analysis  |
 
 Settings replaces the workspace sidebar. It contains Providers, Routing, Configuration, Logs, Extensions, Plugin Store, System, Quick Start, and backend-supported plugin pages. Its top back arrow restores the last workspace page and scroll position. Routing opens the existing configuration editor at its routing fields. Feature gates and unsaved-change handling remain authoritative.
 
@@ -45,4 +45,8 @@ Show absolute reset dates alongside relative time and retain the page timezone. 
 
 OAuth secrets and management credentials stay in existing runtime authentication paths. No real credentials enter the bundle or repository. Reset actions retain their existing confirmation and session guards. API endpoints, request bodies, proxy routing, model effort, and account priority are unchanged by this UI work.
 
-Activity currently uses CPA's existing aggregate traffic data. It does not claim that aggregate counts identify an actual model replacement. Per-request model replacement tracking remains separate work.
+Activity reads sanitized per-request observations from the internal routing monitor through the existing authenticated management API. It shows requested and actual models separately, labels observed provider replacements, and retains account changes and failed attempts as distinct events. Recent replacement means a successful replacement completed within the last minute while the monitor is connected; it does not imply an in-flight request. Reasons appear only when CPA reports an earlier failed attempt with the same request ID.
+
+Cache hit is input-token weighted over successful requests in the last 15 minutes. Only CPA's canonical, complete v2 token buckets count. Missing accounting is unknown, with reporting coverage shown separately. A sharp same-session drop is an observation to inspect, not proof of a routing fault. Last-known data remains labeled when the monitor disconnects.
+
+Overview uses the existing native quota checks for per-account plan, 5-hour remaining, weekly remaining, and reset times. Quota actions and detailed scoped allowances remain on Quota. The original aggregate traffic analysis remains at `#/activity/traffic`.
