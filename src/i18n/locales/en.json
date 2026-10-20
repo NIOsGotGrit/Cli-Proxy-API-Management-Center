@@ -1622,7 +1622,25 @@
     "weekday_wed": "Wed",
     "weekday_thu": "Thu",
     "weekday_fri": "Fri",
-    "weekday_sat": "Sat"
+    "weekday_sat": "Sat",
+    "overview": {
+      "account": "Account",
+      "weekly_left": "Weekly left",
+      "five_hour_left": "5-hour left",
+      "not_reported": "Not reported",
+      "no_reset": "No reset time",
+      "checking": "Checking",
+      "unknown": "Quota unknown",
+      "last_known": "Last known",
+      "plan_limit": "Plan limit",
+      "running_low": "Running low",
+      "available": "Available",
+      "filters": "Filter accounts",
+      "schedule": "Reset schedule",
+      "checked_at": "Checked {{time}}",
+      "subtitle": "Allowance remaining",
+      "title": "Quota"
+    }
   },
   "plugin_management": {
     "title": "Plugin Management",

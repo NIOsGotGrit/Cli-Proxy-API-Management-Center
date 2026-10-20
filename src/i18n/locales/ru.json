@@ -1625,7 +1625,25 @@
     "weekday_wed": "Ср",
     "weekday_thu": "Чт",
     "weekday_fri": "Пт",
-    "weekday_sat": "Сб"
+    "weekday_sat": "Сб",
+    "overview": {
+      "account": "Аккаунт",
+      "weekly_left": "Осталось за неделю",
+      "five_hour_left": "Осталось за 5 часов",
+      "not_reported": "Нет данных",
+      "no_reset": "Нет времени сброса",
+      "checking": "Проверка",
+      "unknown": "Квота неизвестна",
+      "last_known": "Последние данные",
+      "plan_limit": "Лимит плана",
+      "running_low": "Мало квоты",
+      "available": "Доступно",
+      "filters": "Фильтр аккаунтов",
+      "schedule": "Расписание сбросов",
+      "checked_at": "Проверено {{time}}",
+      "subtitle": "Оставшаяся квота",
+      "title": "Квота"
+    }
   },
   "plugin_management": {
     "title": "Управление плагинами",

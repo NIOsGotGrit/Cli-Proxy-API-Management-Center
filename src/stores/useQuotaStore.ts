@@ -92,9 +92,30 @@ export const useQuotaStore = create<QuotaStoreState>((set) => ({
       return { claudeQuota: retained };
     }),
   setCodexQuota: (updater) =>
-    set((state) => ({
-      codexQuota: resolveUpdater(updater, state.codexQuota),
-    })),
+    set((state) => {
+      const next = resolveUpdater(updater, state.codexQuota);
+      let retained = next;
+      for (const [key, quota] of Object.entries(next)) {
+        const previous = state.codexQuota[key];
+        if (
+          previous &&
+          quota !== previous &&
+          !quota.windows.length &&
+          previous.windows.length &&
+          (quota.status === 'loading' || quota.status === 'error')
+        ) {
+          if (retained === next) retained = { ...next };
+          retained[key] = {
+            ...previous,
+            ...quota,
+            windows: previous.windows,
+            observedAt: previous.observedAt,
+            stale: quota.status === 'error' || previous.stale,
+          };
+        }
+      }
+      return { codexQuota: retained };
+    }),
   setDevinQuota: (updater) =>
     set((state) => ({
       devinQuota: resolveUpdater(updater, state.devinQuota),

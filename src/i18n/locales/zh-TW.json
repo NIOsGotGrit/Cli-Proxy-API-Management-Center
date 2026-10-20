@@ -547,7 +547,6 @@
     "reset_confirm_button": "確認重置",
     "reset_not_confirmed": "尚未確認額度重置成功，請重新整理額度後再決定是否重試。",
     "reset_cooldown_failed": "額度已重置，但代理冷卻清除失敗。請在原連線的認證檔案頁面使用「清除冷卻」，不要再次消耗重置卡。",
-
     "reset_success": "已重置「{{name}}」的 Codex 配額",
     "reset_failed": "重置「{{name}}」的 Codex 配額失敗：{{message}}",
     "plan_plus": "Plus",
@@ -1649,7 +1648,25 @@
     "weekday_wed": "三",
     "weekday_thu": "四",
     "weekday_fri": "五",
-    "weekday_sat": "六"
+    "weekday_sat": "六",
+    "overview": {
+      "account": "帳號",
+      "weekly_left": "本週剩餘",
+      "five_hour_left": "5小時剩餘",
+      "not_reported": "未提供",
+      "no_reset": "無重置時間",
+      "checking": "查詢中",
+      "unknown": "額度未知",
+      "last_known": "上次資料",
+      "plan_limit": "已達方案上限",
+      "running_low": "額度偏低",
+      "available": "可用",
+      "filters": "篩選帳號",
+      "schedule": "重設時間表",
+      "checked_at": "查詢於 {{time}}",
+      "subtitle": "剩餘額度",
+      "title": "額度"
+    }
   },
   "plugin_management": {
     "title": "插件管理",

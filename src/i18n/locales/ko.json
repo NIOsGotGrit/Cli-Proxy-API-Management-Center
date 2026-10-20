@@ -1622,7 +1622,25 @@
     "weekday_wed": "수",
     "weekday_thu": "목",
     "weekday_fri": "금",
-    "weekday_sat": "토"
+    "weekday_sat": "토",
+    "overview": {
+      "account": "계정",
+      "weekly_left": "주간 잔여",
+      "five_hour_left": "5시간 잔여",
+      "not_reported": "정보 없음",
+      "no_reset": "초기화 시간 없음",
+      "checking": "확인 중",
+      "unknown": "할당량 확인 불가",
+      "last_known": "마지막 확인 값",
+      "plan_limit": "요금제 한도 도달",
+      "running_low": "잔여량 부족",
+      "available": "사용 가능",
+      "filters": "계정 필터",
+      "schedule": "초기화 일정",
+      "checked_at": "확인: {{time}}",
+      "subtitle": "남은 할당량",
+      "title": "할당량"
+    }
   },
   "plugin_management": {
     "title": "플러그인 관리",

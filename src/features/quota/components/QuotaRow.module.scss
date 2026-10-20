@@ -1,0 +1,90 @@
+.account {
+  min-width: 0;
+}
+.row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.4fr) minmax(140px, 1fr) minmax(140px, 1fr);
+  gap: 24px;
+  width: 100%;
+  align-items: start;
+  text-align: left;
+  padding: 20px 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  cursor: pointer;
+  &:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 6px;
+  }
+}
+.identity,
+.window {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.name {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.provider,
+.status,
+.reset,
+.relative,
+.observed {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.warning {
+  font-size: 12px;
+  color: var(--amber-color);
+}
+.remaining,
+.low {
+  font-size: 19px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.low {
+  color: var(--amber-color);
+}
+.relative {
+  color: var(--text-tertiary);
+}
+.details {
+  padding: 0 0 24px;
+  max-width: 720px;
+  > article {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+  }
+  > article > header {
+    display: none;
+  }
+}
+.observed {
+  margin: 0 0 12px;
+}
+@media (max-width: 700px) {
+  .row {
+    grid-template-columns: minmax(90px, 1.2fr) minmax(80px, 1fr) minmax(80px, 1fr);
+    gap: 12px;
+  }
+  .name {
+    font-size: 12px;
+  }
+  .remaining,
+  .low {
+    font-size: 17px;
+  }
+  .reset,
+  .relative {
+    font-size: 11px;
+  }
+}

@@ -1578,7 +1578,25 @@
     "search_placeholder": "Tìm theo tên file hoặc email",
     "search_empty_title": "Không có tài khoản phù hợp",
     "search_empty_desc": "Hãy thử tên file hoặc email khác, hoặc xóa tìm kiếm.",
-    "search_clear": "Xóa tìm kiếm"
+    "search_clear": "Xóa tìm kiếm",
+    "overview": {
+      "account": "Tài khoản",
+      "weekly_left": "Còn lại trong tuần",
+      "five_hour_left": "Còn lại trong 5 giờ",
+      "not_reported": "Chưa có dữ liệu",
+      "no_reset": "Chưa có giờ đặt lại",
+      "checking": "Đang kiểm tra",
+      "unknown": "Chưa rõ hạn mức",
+      "last_known": "Dữ liệu lần trước",
+      "plan_limit": "Đã đạt hạn mức",
+      "running_low": "Sắp hết hạn mức",
+      "available": "Khả dụng",
+      "filters": "Lọc tài khoản",
+      "schedule": "Lịch đặt lại",
+      "checked_at": "Đã kiểm tra {{time}}",
+      "subtitle": "Hạn mức còn lại",
+      "title": "Hạn mức"
+    }
   },
   "plugin_management": {
     "title": "Quản lý Plugin",

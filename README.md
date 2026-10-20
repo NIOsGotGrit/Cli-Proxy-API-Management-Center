@@ -21,6 +21,14 @@ Manage providers, credentials, quotas, and logs — from a single HTML file.
 
 ---
 
+## Fleet customization
+
+This fork contains the complete CPA management application. Its native quota page uses flat account rows with weekly and 5-hour allowances visible together. Account details, provider filters, and reset schedules open on demand; all other management routes remain available. Claude and Codex quotas load on entry and refresh every five minutes while the page is visible. Failed refreshes retain the last observation and label it as such.
+
+The single-file build is served by the existing CPA instance at `/management.html#/quota`. Set `management.panel-github-repository` to this fork to keep future panel downloads on the customized release. No separate quota service is required, and the proxy engine, credentials, and routing are unchanged by this frontend deployment.
+
+Validation: `bun run verify` runs the full test suite, lint, and single-file production build. The overview has regression coverage for independent 5-hour limits, scoped quotas, missing windows, stale observations, and Codex refresh failures.
+
 ## One place to manage your instance
 
 From everyday configuration to troubleshooting, keep the essentials close at hand.

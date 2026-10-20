@@ -294,6 +294,8 @@ export interface CodexQuotaWindow {
 }
 
 export interface CodexQuotaState {
+  observedAt?: string | null;
+  stale?: boolean;
   status: 'idle' | 'loading' | 'success' | 'error';
   windows: CodexQuotaWindow[];
   planType?: string | null;
